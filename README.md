@@ -71,7 +71,8 @@ GET http://api.nbai.ru/v1/get_by_num/my_api_key/а999му199/eaisto/free
 			"vin":"WAUZZZ4G5CN021391"		//VIN номер
 		}
 		
-	]
+	],
+   "data_price":0							//Стоимость полной версии данных в рублях
 }
 
 
