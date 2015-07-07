@@ -239,3 +239,46 @@ GET http://api.nbai.ru//v1/get_pay_form/API-KEY/:amount/:success_url/:fail_url/:
    "balance":1920 //баланс после покупки
 }
 ```
+
+### Комплексные данные
+Компиляция разнообразных данных из разных источников.
+**ВНИМАНИЕ** Формат этих данных может менятся.
+Код модуля: complex
+Стоимость данных: 200
+Ограничения по запросам: Гос. номер/Vin номер
+
+Бесплатный ответ:
+```javascript
+{ "complex":
+	{
+	"accidentFound":false, //
+	"auctionsFound":false, //найдены ли не японские аукционы
+	"carModel":"Land Rover Range Rover", //название авто
+	"carfaxInfoFound":false, //
+	"customsFound":false, //
+	"equipInfoFound":false, //найдена ли информация о комплектации
+	"gibddWanted":false, //авто в угоне?
+	"gibddRestricted":false, //ограничения на рег. дейсвтия?
+	"milleageFound":false, //найдена ли информация о пробеге
+	"picsFound":false, //найдены ли фотографии авто
+	"repairsFound":false, //найдены ли записи о ремонте авто
+	"taxiFound":false, //найдена ли информация об использовании в такси
+	"vin":"SOLL*********3099", //VIN номер авто закрытый маской (рекомендуется получать vin номер через ЕАИСТО)
+	"year":"2007", //год выпуска авто
+	"nums": //найденные номера
+		[
+			"а999му199",
+			"а255ма25"
+		],
+	"autoNomerPics": //фотографии номера
+		[
+			"http://img02.avto-nomer.ru/121212/m/ru3145358.jpg"
+		]
+	}
+   "data_price":200 //Стоимость полной версии данных в рублях
+}
+```
+
+Платный ответ:
+```javascript
+```
