@@ -81,8 +81,6 @@ GET http://api.nbai.ru/v1/get_by_num/my_api_key/а999му199/eaisto/free
 ### Запрос баланса
 
 ```javascript
-Например нам нужно запросить информацию из базы ЕАИСТО по гос. номеру а999му199
-
 GET http://api.nbai.ru/v1/get_balance/API-KEY
 
 
@@ -98,6 +96,38 @@ GET http://api.nbai.ru/v1/get_balance/API-KEY
 
 { 
 	"balance":250	//Баланс в рублях
+}
+
+
+```
+
+### Пополнение баланса
+
+```javascript
+Метод позволяет получить форму пополнения баланса ключа НБАИ. Пополнение баланса можно вызывать непосредственно перед покупкой отчета (например когда баланс пополняет ваш клиент), или заранее.
+
+GET http://api.nbai.ru//v1/get_pay_form/API-KEY/:amount/:success_url/:fail_url/:return_url
+
+:amount - сумма на которую нужно пополнить баланс
+:success_url - urlencode ссылка на которую будет возвращен пользователь после оплаты (для PHP функция urlencode для JavaScript - encodeURIComponent)
+:fail_url - ссылка на которую будет возвращен пользователь в случае неудачной оплаты
+:return_url - ссылка на которую будет возвращен пользователь если захочет вернутся обратно в магазин
+
+Статусы:
+
+* 200 - запрос прошел успешно, тело ответа содержит запрашиваемые данные
+* 503 - ошибка сервера, возможно сервер перегружен
+* 400 - ошибка валидации параметров запроса
+* 404 - ошибка формирования запроса. Проверьте правильность запроса
+* остальные - ошибка сервера, возможно сервер перегружен
+
+Ответ сервера:
+
+{ 
+	"balance":250,	//Текущий баланс в рублях
+	"transanction_id":"d05f9b334d132807c62012133bdd0984", //id транзанкции в платежной системе
+	//HTML код формы оплаты. Html код может менятся, поэтому рекомендуется использовать его для пополнения счета. Автоматическая отправка этой формы возможна с помощью jQuery
+	"pay_form":"\n\t\t<p>Сумма к оплате: <b>900.00</b></p>\n\t\t<form method =\"post\" action =\"https://www.moneta.ru/assistant.htm\" id=\"payform\"> \n\t\t\t<input type=\"hidden\" name=\"MNT_ID\" value=\"74377777\">  \n\t\t\t<input type=\"hidden\" name=\"MNT_TRANSACTION_ID\" value=\"321\"> \n\t\t\t<input type=\"hidden\" name=\"MNT_CURRENCY_CODE\" value=\"RUB\"> \n\t\t\t<input type=\"hidden\" name=\"MNT_AMOUNT\" value=\"900.00\"> \n\t\t\t<input type=\"hidden\" name=\"MNT_SIGNATURE\" value=\"d10e3a5ecd84a27c18f4d6d31248b1ec\"> \n\t\t\t<input type=\"hidden\" name=\"MNT_TEST_MODE\" value=\"1\">\n\t\t\t<input type=\"hidden\" name=\"MNT_CUSTOM1\" value=\"d05f9b334d132807c62012133bdd0984\">\n\t\t\t<input type=\"hidden\" name=\"MNT_SUCCESS_URL\" value=\"http://google.ru\">\n\t\t\t<input type=\"hidden\" name=\"MNT_FAIL_URL\" value=\"3\">\n\t\t\t<input type=\"hidden\" name=\"MNT_RETURN_URL\" value=\"4\">\n\t\t\t\n\t\t\t<input type=\"submit\" value=\"Оплатить заказ\"> \n\t\t</form>\n\n"
 }
 
 
